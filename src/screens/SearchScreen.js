@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
 import ResultsList from "../components/ResultsList";
@@ -15,7 +15,7 @@ const SearchScreen = () => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SearchBar
         term={searchTerm}
         setSearchTerm={(newTerm) => setSearchTerm(newTerm)}
@@ -23,12 +23,14 @@ const SearchScreen = () => {
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       <Text>We have found this many results: {results.length}</Text>
-      <ResultsList results={filterResultsByPrice("$")} title="Budget" />
-      <ResultsList results={filterResultsByPrice("$$")} title="Pricier" />
-      <ResultsList
-        results={filterResultsByPrice("$$$")}
-        title="Slightly Expensive"
-      />
+      <ScrollView>
+        <ResultsList results={filterResultsByPrice("$")} title="Budget" />
+        <ResultsList results={filterResultsByPrice("$$")} title="Pricier" />
+        <ResultsList
+          results={filterResultsByPrice("$$$")}
+          title="Slightly Expensive"
+        />
+      </ScrollView>
       {/* <ResultsList results={"$$$$"} title="Expensive" /> */}
     </View>
   );

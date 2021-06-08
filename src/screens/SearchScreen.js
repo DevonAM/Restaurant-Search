@@ -7,6 +7,12 @@ const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchApi, results, errorMsg] = useResults();
 
+  filterResultsByPrice = (price) => {
+    return results.filter((result) => {
+      return result.price === price;
+    });
+  };
+
   return (
     <View>
       <SearchBar
@@ -16,6 +22,13 @@ const SearchScreen = () => {
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       <Text>We have found this many results: {results.length}</Text>
+      <ResultsList results={filterResultsByPrice("$")} title="Budget" />
+      <ResultsList results={filterResultsByPrice("$$")} title="Pricier" />
+      <ResultsList
+        results={filterResultsByPrice("$$$")}
+        title="Slightly Expensive"
+      />
+      {/* <ResultsList results={"$$$$"} title="Expensive" /> */}
     </View>
   );
 };

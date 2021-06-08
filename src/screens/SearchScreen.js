@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
 import ResultsList from "../components/ResultsList";
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchApi, results, errorMsg] = useResults();
 
@@ -22,11 +22,19 @@ const SearchScreen = () => {
         onTermSubmit={() => searchApi(searchTerm)}
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
-      <Text>We have found this many results: {results.length}</Text>
       <ScrollView>
-        <ResultsList results={filterResultsByPrice("$")} title="Budget" />
-        <ResultsList results={filterResultsByPrice("$$")} title="Pricier" />
         <ResultsList
+          navigation={navigation}
+          results={filterResultsByPrice("$")}
+          title="Budget"
+        />
+        <ResultsList
+          navigation={navigation}
+          results={filterResultsByPrice("$$")}
+          title="Pricier"
+        />
+        <ResultsList
+          navigation={navigation}
           results={filterResultsByPrice("$$$")}
           title="Slightly Expensive"
         />
